@@ -12,10 +12,13 @@ public class Sprint implements Event {
 
     private final SprintBacklog backlog;
     private final int numberOfDays;
+    private final int place = 2;
 
     public Sprint(int numberOfDays) {
         this.numberOfDays = numberOfDays;
         this.backlog = new SprintBacklog();
+        
+        
     }
 
     @Override
@@ -26,10 +29,16 @@ public class Sprint implements Event {
     public int getNumberOfDays() {
         return numberOfDays;
     }
+    @Override
+    public int getPlace(){
+        return place;
+    }
 
     @Override
     public Class<? extends Event> followingEventType() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        return SprintRetrospective.class;
+        
     }
 
 }

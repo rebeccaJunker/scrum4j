@@ -16,6 +16,7 @@ public class SprintPlanning implements Event {
 
     private final List<BacklogItem> items = new ArrayList<>();
     private final int itemCount;
+    private final int place = 1;
 
     public SprintPlanning(int itemCount) {
         this.itemCount = itemCount;
@@ -34,6 +35,10 @@ public class SprintPlanning implements Event {
     
     public void addBacklogItem(BacklogItem item) {
         this.items.add(item);
+    }
+    
+    public int getPlace(){
+        return place;
     }
 
     public List<BacklogItem> getItems() {

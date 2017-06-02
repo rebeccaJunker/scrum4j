@@ -33,10 +33,26 @@ public class Scrum {
         LOG.info("Moving to next event...");
         Event previousEvent = null;
         
+        
         if (this.currentEvent == null) {
+            previousEvent=currentEvent;
             this.currentEvent = event;
         }
         else {
+            
+            if (this.currentEvent.getPlace()+1==event.getPlace()){
+                previousEvent=currentEvent;
+                this.currentEvent = event;
+            }
+            else if (this.currentEvent.getPlace()==4 && event.getPlace()==1){
+                previousEvent=currentEvent;
+                this.currentEvent=event;
+            }
+            else {
+                throw new UnexpectedNextEventException("falsche Reihenfolge!");
+            }
+            
+            
             /*
              * TODO implement the assertion of the logical order. Throw an
              * UnexpectedNextEventException if the order is not correct.
@@ -71,7 +87,17 @@ public class Scrum {
         SprintRetrospective retro = new SprintRetrospective();
         moveToNextEvent(retro);
     }
-
+    
+    public void completeScrum(int days, int sprints) throws UnexpectedNextEventException, InitializationException, InvalidSprintPeriodException{
+        
+        for (int i=0;i<sprints;i++){
+            this.planSprint(i+1);
+            this.startSprint(days);
+            this.doDailyScrum();       
+            this.reviewSprint();
+            this.doSprintRetrospective();
+        }
+    }
     private void ensureCorrectNumberOfDays(Sprint sprint) throws InvalidSprintPeriodException {
         if (initialSprint == null) {
             initialSprint = sprint;
